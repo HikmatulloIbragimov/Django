@@ -9,8 +9,6 @@ router.register(r'books', BookViewSet)
 router.register(r'audio-parts', BookAudioPartViewSet)
 router.register(r'page-ranges', PageRangeViewSet)
 router.register(r'categories', CategoryViewSet)
-router = DefaultRouter()
-router.register(r'books', BookViewSet)
 
 urlpatterns = router.urls
 

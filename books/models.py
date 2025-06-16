@@ -1,5 +1,5 @@
 from django.db import models
-
+import uuid
 
 
 class Category(models.Model):
@@ -28,6 +28,7 @@ class BookCategory(models.Model):
 
 
 class Book(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
     category = models.ForeignKey(BookCategory, on_delete=models.CASCADE, related_name="books")
@@ -35,6 +36,8 @@ class Book(models.Model):
     pdf_url = models.URLField(blank=True)  # заменили pdf_file на pdf_url
     audio_required = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
+    price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    book_author = models.CharField(max_length=255, default="")
 
 class BookAudioPart(models.Model):
     book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name="audio_parts")
