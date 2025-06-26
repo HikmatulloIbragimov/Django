@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
 
-# Обновление пакетов и установка ffmpeg
-apt-get update && apt-get install -y ffmpeg
+set -e  # Остановить при ошибке
+
+curl -L https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz | tar xJ
+mv ffmpeg-*-static/ffmpeg /usr/local/bin/ffmpeg
+mv ffmpeg-*-static/ffprobe /usr/local/bin/ffprobe
