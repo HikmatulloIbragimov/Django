@@ -29,3 +29,5 @@ charset-normalizer==3.4.2
 idna==3.10
 sqlparse==0.5.3
 tzdata==2025.2
+google-auth
+google-cloud-storage
