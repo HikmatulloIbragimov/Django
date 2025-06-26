@@ -11,3 +11,5 @@ services:
         sync: false
       - key: DEBUG
         value: False
+      - key: PATH
+        value: bin:$PATH
