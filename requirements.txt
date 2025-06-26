@@ -31,3 +31,5 @@ sqlparse==0.5.3
 tzdata==2025.2
 google-auth
 google-cloud-storage
+google-auth-oauthlib
+google-api-python-client
