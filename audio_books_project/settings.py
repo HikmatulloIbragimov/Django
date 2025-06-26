@@ -13,7 +13,8 @@ import os
 from pathlib import Path
 from google.oauth2 import service_account
 from google.cloud import storage
-from pathlib import Path
+import json
+from google.oauth2 import service_account
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -142,12 +143,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # GS_CREDENTIALS = service_account.Credentials.from_service_account_file(GS_CREDENTIALS_PATH)
 
 
-BASE_DIR = Path(__file__).resolve().parent.parent
-
-GOOGLE_APPLICATION_CREDENTIALS_PATH = BASE_DIR / "keys.json"
-
-GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
-    GOOGLE_APPLICATION_CREDENTIALS_PATH
+GOOGLE_CREDS_JSON = os.environ.get("GOOGLE_CREDS_JSON")
+GS_CREDENTIALS = service_account.Credentials.from_service_account_info(
+    json.loads(GOOGLE_CREDS_JSON)
 )
 
 GS_BUCKET_NAME = 'my-django-buckets'  # 👉 замени на имя своего бакета
