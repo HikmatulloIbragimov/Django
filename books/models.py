@@ -50,3 +50,30 @@ class PageRange(models.Model):
     start_page = models.IntegerField()
     end_page = models.IntegerField()
     audio_url = models.URLField(default="", blank=True)
+
+
+class ConversationText(models.Model):
+    text = models.TextField()
+    audio_url = models.URLField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.text[:50]
+
+
+
+class UploadedFile(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    file_url = models.URLField()
+    file_type = models.CharField(max_length=10)  # "pdf" или "image"
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.file_type.upper()} - {self.id}"
+
+
+class Banner(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    image_url = models.URLField()
+    target_url = models.URLField()
+    created_at = models.DateTimeField(auto_now_add=True)

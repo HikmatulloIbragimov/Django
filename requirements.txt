@@ -1,19 +1,31 @@
-asgiref==3.8.1
+# Django & WSGI
+Django==5.2.3
+gunicorn
+
+# REST API
+djangorestframework==3.16.0
+
+# Cloudinary
+cloudinary==1.44.0
+django-cloudinary-storage==0.3.0
+
+# PostgreSQL
+psycopg2-binary==2.9.10
+dj-database-url
+
+# CORS
+django-cors-headers
+
+# TTS
+edge-tts
+pydub
+ffmpeg-python
+
+# Утилиты
+requests==2.32.4
+urllib3==2.4.0
 certifi==2025.4.26
 charset-normalizer==3.4.2
-cloudinary==1.44.0
-Django==5.2.3
-django-cloudinary-storage==0.3.0
-djangorestframework==3.16.0
 idna==3.10
-psycopg2-binary==2.9.10
-requests==2.32.4
-six==1.17.0
 sqlparse==0.5.3
 tzdata==2025.2
-urllib3==2.4.0
-djangorestframework
-gunicorn
-dj-database-url
-psycopg2-binary
-django-cors-headers

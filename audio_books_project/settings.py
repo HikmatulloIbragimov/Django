@@ -11,9 +11,6 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 import os
 from pathlib import Path
-import cloudinary
-# import cloudinary.uploader
-# import cloudinary.api
 from google.oauth2 import service_account
 from google.cloud import storage
 
@@ -134,21 +131,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 
-# INSTALLED_APPS += ['cloudinary', 'cloudinary_storage']
-
-# DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-
-# CLOUDINARY = {
-#     'cloud_name': 'dbvrgdvcb',
-#     'api_key': '436118943332773',
-#     'api_secret': 'uedNlQSbkX02pTIysbIf9vU_72w',
-# }
-# cloudinary.config(
-#     cloud_name=CLOUDINARY['cloud_name'],
-#     api_key=CLOUDINARY['api_key'],
-#     api_secret=CLOUDINARY['api_secret'],
-#     secure=True
-# )
 
 
 
@@ -174,3 +156,14 @@ GS_BUCKET_NAME = 'my-django-buckets'  # 👉 замени на имя своег
 
 
 CORS_ALLOW_ALL_ORIGINS = True  # ⚠️ Только для DEV
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://192.168.1.22:3000",  # IP, с которого работает React
+]
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
+
+ALLOWED_HOSTS = ['*']  # или лучше ['your-service.onrender.com']
+DEBUG = False          # В продакшене обязательно False
