@@ -13,8 +13,7 @@ import os
 from pathlib import Path
 from google.oauth2 import service_account
 from google.cloud import storage
-
-
+from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -143,9 +142,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # GS_CREDENTIALS = service_account.Credentials.from_service_account_file(GS_CREDENTIALS_PATH)
 
 
-GOOGLE_APPLICATION_CREDENTIALS_PATH = os.path.join(
-    os.path.expanduser("~"), "Desktop", "Django", "keys.json"
-)
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+GOOGLE_APPLICATION_CREDENTIALS_PATH = BASE_DIR / "keys.json"
 
 GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
     GOOGLE_APPLICATION_CREDENTIALS_PATH
