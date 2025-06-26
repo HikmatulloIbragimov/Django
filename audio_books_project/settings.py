@@ -144,10 +144,14 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 GOOGLE_CREDS_JSON = os.environ.get("GOOGLE_CREDS_JSON")
-GS_CREDENTIALS = service_account.Credentials.from_service_account_info(
-    json.loads(GOOGLE_CREDS_JSON)
-)
 
+if GOOGLE_CREDS_JSON:
+    GS_CREDENTIALS = service_account.Credentials.from_service_account_info(
+        json.loads(GOOGLE_CREDS_JSON)
+    )
+else:
+    GS_CREDENTIALS = None  # или raise Exception("No credentials found")
+    
 GS_BUCKET_NAME = 'my-django-buckets'  # 👉 замени на имя своего бакета
 
 
