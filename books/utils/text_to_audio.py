@@ -1,16 +1,23 @@
 import os
 from edge_tts import Communicate
+from pydub import AudioSegment
 from langdetect import detect, DetectorFactory
-from moviepy.editor import AudioFileClip, concatenate_audioclips
 from .transliterate_uz import to_latin
 
-DetectorFactory.seed = 0  # Стабильность в detect()
+DetectorFactory.seed = 0  # Чтобы результаты были стабильными
 
 
 def detect_language(text):
     try:
         lang = detect(text)
-        return lang if lang in ("uz", "ru", "en") else "uz"
+        if lang == "uz":
+            return "uz"
+        elif lang == "ru":
+            return "ru"
+        elif lang == "en":
+            return "en"
+        else:
+            return "uz"  # дефолт
     except Exception:
         return "uz"
 
@@ -32,7 +39,7 @@ async def text_to_speech_parts(text, output_path_prefix, chunk_size=2000):
     print(f"[✔] Using voice: {voice}")
     print(f"[📄] Original text: {text[:100]}...")
 
-    if language == "uz" and not any("\u0400" <= c <= "\u04FF" for c in text):  # узбекская латиница
+    if language == "uz" and not any("\u0400" <= c <= "\u04FF" for c in text):  # если узбек и латиница
         processed_text = to_latin(text)
     else:
         processed_text = text
@@ -54,21 +61,18 @@ async def text_to_speech_parts(text, output_path_prefix, chunk_size=2000):
     if not audio_files:
         raise RuntimeError("❌ Не удалось озвучить ни одну часть текста!")
 
-    # Собирать в единый файл через moviepy
-    try:
-        clips = [AudioFileClip(f) for f in audio_files]
-        final = concatenate_audioclips(clips)
-        final.write_audiofile(output_path_prefix + ".mp3", codec='libmp3lame')
+    combined = AudioSegment.empty()
+    for file in audio_files:
+        try:
+            segment = AudioSegment.from_file(file)
+            combined += segment + AudioSegment.silent(duration=500)
+        except Exception as e:
+            print(f"[⚠️] Failed to load audio file {file}: {e}")
 
-        for clip in clips:
-            clip.close()
-    except Exception as e:
-        print(f"[⚠️] Ошибка при объединении аудио: {e}")
-        raise
+    combined.export(output_path_prefix + ".mp3", format="mp3")
 
-    # Удаление временных файлов
     for file in audio_files:
         try:
             os.remove(file)
         except Exception as e:
-            print(f"[⚠️] Не удалось удалить временный файл {file}: {e}")
+            print(f"[⚠️] Failed to delete temp file {file}: {e}")
