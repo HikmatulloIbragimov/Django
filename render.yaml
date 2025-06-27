@@ -5,7 +5,7 @@ services:
     region: oregon
     plan: free
     buildCommand: |
-      # Убираем colors.sh, чтобы не было ошибки tput
+      # Удаляем colors.sh, чтобы не мешал tput
       if [ -f /home/render/colors.sh ]; then
         rm /home/render/colors.sh || true
       fi
