@@ -15,6 +15,7 @@ from google.oauth2 import service_account
 from google.cloud import storage
 import json
 from google.oauth2 import service_account
+from moviepy.config import change_settings
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -168,3 +169,6 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 ALLOWED_HOSTS = ['*']  # или лучше ['your-service.onrender.com']
 DEBUG = False          # В продакшене обязательно False
+
+
+change_settings({"FFMPEG_BINARY": os.path.join(os.getcwd(), "bin", "ffmpeg")})
