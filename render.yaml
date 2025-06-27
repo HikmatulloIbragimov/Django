@@ -2,14 +2,14 @@ services:
   - type: web
     name: audiobook-django-app
     env: python
+    region: oregon
+    plan: free
     buildCommand: |
       chmod +x build.sh
       ./build.sh
+      pip install --upgrade pip
+      pip install -r requirements.txt
     startCommand: gunicorn audio_books_project.wsgi:application --bind 0.0.0.0:$PORT
-    runtime: python
-    region: oregon
-    plan: free
-    autoDeploy: true
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.9
