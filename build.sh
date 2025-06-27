@@ -1,10 +1,5 @@
 #!/usr/bin/env bash
-set -eo pipefail
-
-# ⚠️ Fix Render's tput bug
-if [ -f /home/render/colors.sh ]; then
-  sed -i 's/tput.*/true/' /home/render/colors.sh
-fi
+set -e
 
 # Установка ffmpeg
 mkdir -p bin
@@ -13,6 +8,5 @@ mv ffmpeg-*-static/ffmpeg ./bin/ffmpeg
 mv ffmpeg-*-static/ffprobe ./bin/ffprobe
 chmod +x ./bin/ffmpeg ./bin/ffprobe
 
-# Добавление ffmpeg в PATH
-echo 'export PATH="$(pwd)/bin:$PATH"' >> ~/.profile
+# Добавим ffmpeg в PATH для дальнейших команд
 export PATH="$(pwd)/bin:$PATH"

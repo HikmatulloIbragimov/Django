@@ -5,11 +5,10 @@ services:
     region: oregon
     plan: free
     buildCommand: |
-      # Удаляем colors.sh, чтобы не мешал tput
+      # Удаляем colors.sh, чтобы избежать tput ошибки
       if [ -f /home/render/colors.sh ]; then
         rm /home/render/colors.sh || true
       fi
-
       chmod +x build.sh
       ./build.sh
       pip install --upgrade pip
@@ -17,4 +16,10 @@ services:
     startCommand: gunicorn audio_books_project.wsgi:application --bind 0.0.0.0:$PORT
     envVars:
       - key: PYTHON_VERSION
-        value: "3.11.9"
+        value: 3.11.9
+      - key: PATH
+        value: bin:$PATH
+      - key: DEBUG
+        value: "False"
+      - key: ALLOWED_HOSTS
+        value: audiobook-django-app.onrender.com
