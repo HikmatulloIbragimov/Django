@@ -1,5 +1,14 @@
 #!/usr/bin/env bash
-set -e
+
+
+echo "Disabling tput error..."
+touch /home/render/colors.sh
+echo '#!/bin/sh' > /home/render/colors.sh
+echo 'exit 0' >> /home/render/colors.sh
+
+set -eo pipefail
+tput setaf 2 || true
+apt update && apt install -y ncurses-bin
 
 # Установка ffmpeg для moviepy
 mkdir -p bin
