@@ -1,3 +1,4 @@
+--upgrade-strategy eager
 # Django & WSGI
 Django==5.2.3
 gunicorn
@@ -16,21 +17,23 @@ dj-database-url
 # CORS
 django-cors-headers
 
-# TTS
+# TTS и мультимедиа
 edge-tts
-pydub
+pydub==0.25.1  # последняя без проблем
 ffmpeg-python
+moviepy>=1.0.3
 
 # Утилиты
-requests==2.32.4
-urllib3==2.4.0
-certifi==2025.4.26
-charset-normalizer==3.4.2
-idna==3.10
-sqlparse==0.5.3
-tzdata==2025.2
+requests
+urllib3
+certifi
+charset-normalizer
+idna
+sqlparse
+tzdata
+
+# Google Cloud
 google-auth
 google-cloud-storage
 google-auth-oauthlib
 google-api-python-client
-moviepy>=1.0.3

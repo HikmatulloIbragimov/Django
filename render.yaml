@@ -1,15 +1,18 @@
 services:
   - type: web
-    name: django-app
+    name: audiobook-django-app
     env: python
-    buildCommand: "./build.sh && pip install -r requirements.txt"
-    startCommand: "gunicorn audio_books_project.wsgi:application"
+    buildCommand: |
+      chmod +x build.sh
+      ./build.sh
+      pip install -r requirements.txt
+    startCommand: gunicorn audio_books_project.wsgi:application --bind 0.0.0.0:$PORT
+    runtime: python
+    region: oregon
+    plan: free
+    autoDeploy: true
     envVars:
-      - key: DJANGO_SETTINGS_MODULE
-        value: audio_books_project.settings
-      - key: SECRET_KEY
-        sync: false
-      - key: DEBUG
-        value: False
+      - key: PYTHON_VERSION
+        value: 3.11.9
       - key: PATH
         value: bin:$PATH
