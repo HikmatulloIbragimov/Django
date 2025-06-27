@@ -13,3 +13,12 @@ services:
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.9
+buildCommand: |
+  # fix Render bug with tput in colors.sh
+  if [ -f /home/render/colors.sh ]; then
+    rm /home/render/colors.sh || true
+  fi
+
+  chmod +x build.sh
+  ./build.sh
+  pip install -r requirements.txt
