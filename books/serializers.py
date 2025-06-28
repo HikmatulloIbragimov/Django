@@ -20,7 +20,10 @@ class BookSerializer(serializers.ModelSerializer):
     id = serializers.UUIDField(read_only=True)
     audio_parts = BookAudioPartSerializer(many=True, read_only=True)
     page_ranges = PageRangeSerializer(many=True, read_only=True)
-    category = serializers.StringRelatedField()  # 👈 возвращает строку из __str__ метода модели BookCategory
+    category = serializers.SlugRelatedField(
+        slug_field='title',
+        queryset=BookCategory.objects.all()
+    )
     class Meta:
         model = Book
         fields = [
