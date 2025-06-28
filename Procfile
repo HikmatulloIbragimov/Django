@@ -1,1 +1,0 @@
-web: gunicorn audio_books_project.wsgi --log-file -
