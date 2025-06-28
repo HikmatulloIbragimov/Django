@@ -1,2 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+*.sqlite3
+
+# Django secret files
+.env
+*.log
 keys.json
-keys.json
+
+# Virtual environments
+venv/
+ENV/
+env/
+
+# IDE/editor stuff
+.vscode/
+.idea/
+
+# OS junk
+.DS_Store
+Thumbs.db

@@ -15,7 +15,8 @@ from google.oauth2 import service_account
 from google.cloud import storage
 import json
 from google.oauth2 import service_account
-from moviepy.config import change_settings
+from dotenv import load_dotenv
+load_dotenv()  
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -81,13 +82,21 @@ WSGI_APPLICATION = 'audio_books_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+SECRET_KEY = os.getenv("SECRET_KEY")
+DEBUG = os.getenv("DEBUG", "False") == "True"
 
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "*").split(",")
+
+# подключение к базе данных
+import dj_database_url
+
+DATABASES = {
+    'default': dj_database_url.config(
+        default=os.getenv("DATABASE_URL"),
+        conn_max_age=600,
+        ssl_require=True
+    )
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -144,7 +153,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # GS_CREDENTIALS = service_account.Credentials.from_service_account_file(GS_CREDENTIALS_PATH)
 
 
-GOOGLE_CREDS_JSON = os.environ.get("GOOGLE_CREDS_JSON")
+GOOGLE_CREDS_JSON = os.environ.get("GOOGLE_APPLICATION_CREDENTIALS_JSON")
 
 if GOOGLE_CREDS_JSON:
     GS_CREDENTIALS = service_account.Credentials.from_service_account_info(
@@ -171,4 +180,3 @@ ALLOWED_HOSTS = ['*']  # или лучше ['your-service.onrender.com']
 DEBUG = False          # В продакшене обязательно False
 
 
-change_settings({"FFMPEG_BINARY": os.path.join(os.getcwd(), "bin", "ffmpeg")})

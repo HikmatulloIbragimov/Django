@@ -55,11 +55,6 @@ class CategoryViewSet(viewsets.ModelViewSet):
     serializer_class = CategorySerializer
     http_method_names = ['get', 'post', 'put', 'delete']
 
-
-class ConversationTextViewSet(viewsets.ModelViewSet):
-    queryset = ConversationText.objects.all()
-    serializer_class = ConversationTextSerializer
-
 class ConversationTextViewSet(ModelViewSet):
     queryset = ConversationText.objects.all()
     serializer_class = ConversationTextSerializer
