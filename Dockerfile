@@ -16,4 +16,4 @@ COPY . /app
 RUN pip install --no-cache-dir -r requirements.txt
 
 # 6. Запуск gunicorn (замени `myproject` на имя твоего проекта, если другое)
-CMD ["gunicorn", "myproject.wsgi:application", "--bind", "0.0.0.0:8000"]
+CMD ["gunicorn", "audio_books_project.wsgi:application", "--bind", "0.0.0.0:8000"]
